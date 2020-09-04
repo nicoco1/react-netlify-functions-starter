@@ -2,6 +2,16 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "run-p start:**",
+    "start:app": "react-scripts start",
+    "start:lambda": "netlify-lambda serve src/functions",
+    "build": "run-p build:**",
+    "build:app": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build:lambda": "netlify-lambda build src/functions",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -16,11 +26,24 @@
     "react-scripts": "3.4.3",
     "typescript": "^3.7.5"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "@babel/plugin-transform-object-assign": "^7.0.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/aws-lambda": "^8.10.15",
+    "@types/netlify-identity-widget": "^1.4.2",
+    "babel-loader": "^8.0.4",
+    "cross-env": "^7.0.2",
+    "http-proxy-middleware": "^0.19.2",
+    "netlify-lambda": "^1.1.0",
+    "node-sass": "^4.14.1",
+    "npm-run-all": "^4.1.5"
+  },
+  "bit": {
+    "env": {
+      "compiler": "bit.envs/compilers/react-typescript@3.1.57"
+    },
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,8 +59,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@types/netlify-identity-widget": "^1.4.2"
   }
 }

@@ -19,6 +19,8 @@
     "noEmit": true,
     "jsx": "react"
   },
+  
+  "exclude": ["src/setupProxy.js", "src/functions"],
   "include": [
     "src"
   ]

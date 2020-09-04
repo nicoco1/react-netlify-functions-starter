@@ -1,22 +1,23 @@
-import React, { useEffect, useState, useImperativeHandle } from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import netlifyIdentity from 'netlify-identity-widget';
-import { setupMaster } from 'cluster';
+import Home from './Home';
+import { UserContext  } from './components/UserContext';
 
 const App = () => {
-    const [user, setUser] = useState<netlifyIdentity.User | null>();
+    const [user, setUser] = useState<netlifyIdentity.User | undefined>();
 
     useEffect(() => {
         netlifyIdentity.init({});
-        setUser(netlifyIdentity.currentUser());
+        setUser(netlifyIdentity.currentUser() || undefined);
 
         netlifyIdentity.on('login', user => {
             setUser(user);
             netlifyIdentity.close();
         });
         netlifyIdentity.on('logout', () => {
-            setUser(null);
+            setUser(undefined);
             netlifyIdentity.close();
         });
     }, []);
@@ -61,10 +62,14 @@ const App = () => {
                             console.log(netlifyIdentity.currentUser());
                         }}
                     >
-                        Me
+                        Check me in the console!
                     </button>
                 )}
+                <UserContext.Provider value={user}>
+                    <Home />
+                </UserContext.Provider>
             </header>
+
         </div>
     );
 };

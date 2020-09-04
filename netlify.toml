@@ -1,0 +1,19 @@
+[build]
+  command = "npm run build"
+  functions = "functions"
+  publish = "build"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/servers/:splat"
+  status = 200
+  query = {path = ":path"} #  apply this rule for /old-path?path=example
+
+[[plugins]]
+package = "@netlify/plugin-functions-install-core"
+
+[[headers]]
+  # Define which paths this specific [[headers]] block will cover.
+  for = "/*"
+    [headers.values]
+    Access-Control-Allow-Origin = "*"
